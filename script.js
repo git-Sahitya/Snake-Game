@@ -1,6 +1,9 @@
-const board = document.querySelector(".board")
-const startButton = document.querySelector(".btn-start")
-const modal = document.querySelector(".modal")
+const board = document.querySelector(".board");
+const startButton = document.querySelector(".btn-start");
+const modal = document.querySelector(".modal");
+const startGameModal = document.querySelector(".start-game");
+const gameOverModal = document.querySelector(".game-over")
+const restartButton = document.querySelector(".btn-restart")
 
 const blockHeight = 50
 const blockWidth = 50
@@ -14,10 +17,10 @@ let intervalId = null;
 let food = { x: Math.floor(Math.random() * rows), y: Math.floor(Math.random() * cols) }
 
 const blocks = []
-const snake = [
+let snake = [
 
     {
-        x: 3, y: 3
+        x: 1, y: 3
     }]
 let direction = 'right'
 
@@ -51,8 +54,13 @@ function render() {
     }
     // write a condition to game over if head cross the border
     if (head.x < 0 || head.x >= rows || head.y < 0 || head.y >= cols) {
-        alert("Game Over")
-        clearInterval(intervalId)
+        // alert("Game Over")
+        clearInterval(intervalId);
+
+        modal.style.display = "flex"
+        startGameModal.style.display = "none"
+        gameOverModal.style.display = "flex"
+        return;
     }
 
 
@@ -79,10 +87,26 @@ function render() {
 //     render()
 // }, 400)
 
-startButton.addEventListener("click" , ()=>{
+startButton.addEventListener("click", () => {
     modal.style.display = "none"
-    intervalId = setInterval(()=> {render()},300)
+    intervalId = setInterval(() => { render() }, 300)
 })
+
+restartButton.addEventListener("click", restartGame)
+
+function restartGame() {
+    blocks[`${food.x}-${food.y}`].classList.remove("food")
+    snake.forEach((segment) => {
+        blocks[`${segment.x}-${segment.y}`].classList.remove("fill")
+    })
+    modal.style.display = "none"
+    direction = "down"
+    snake = [{ x: 1, y: 3 }]
+    food = { x: Math.floor(Math.random() * rows), y: Math.floor(Math.random() * cols) }
+    intervalId = setInterval(() => { render() }, 300)
+
+}
+
 
 addEventListener("keydown", (event) => {
     if (event.key == "ArrowUp") {

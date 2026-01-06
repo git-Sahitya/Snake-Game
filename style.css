@@ -51,15 +51,14 @@ section {
   height: 100%;
 }
 
-.btn{
-  padding: var(--space-sm)var(--space-md);
+.btn {
+  padding: var(--space-sm) var(--space-md);
   border: none;
   border-radius: var(--border-radius-sm);
   cursor: pointer;
   transition: all 03s ease;
-
 }
-.btn:hover{
+.btn:hover {
   transform: scale(1.1);
 }
 
@@ -101,7 +100,7 @@ section .infos {
   background-color: var(--bg-food-color);
 }
 
-.modal{
+.modal {
   height: 100vh;
   width: 100vw;
   position: fixed;
@@ -112,9 +111,13 @@ section .infos {
   justify-content: center;
   align-items: center;
 }
-.modal .start-game{
+.modal .start-game,
+.modal .game-over {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: var(--space-lg);
+}
+.modal .game-over{
+  display: none;
 }
